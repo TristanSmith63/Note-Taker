@@ -15,13 +15,14 @@ app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'notes.html'));
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 // API Routes
 app.get('/api/notes', (req, res) => {
   fs.readFile(path.join(__dirname, 'db', 'db.json'), 'utf8', (err, data) => {
+    console.log(data);
     if (err) {
       console.error('Error reading db.json:', err);
       return res.status(500).json({ error: 'Failed to read notes' });
@@ -58,6 +59,9 @@ app.post('/api/notes', (req, res) => {
       res.json(newNote);
     });
   });
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}. Open http://localhost:${PORT} in your browser.`));
